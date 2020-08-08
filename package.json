@@ -1,0 +1,31 @@
+{
+  "name": "typescript-api",
+  "version": "1.0.0",
+  "description": "Typescript node.js API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/perosa100/node-typescript-api.git"
+  },
+  "keywords": [
+    "nodejs",
+    "typescript",
+    "api"
+  ],
+  "author": "Patrick Perosa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/perosa100/node-typescript-api/issues"
+  },
+  "homepage": "https://github.com/perosa100/node-typescript-api#readme",
+  "dependencies": {
+   
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.27",
+     "typescript": "^3.9.7"
+  }
+}
