@@ -10,7 +10,7 @@
     "test:functional": "jest --projects ./test --forceExit --runInBand",
     "lint": "eslint ./src ./test --ext .ts",
     "lint:fix": "eslint ./src ./test --ext .ts --fix",
-    "test:unit": "jest",
+    "test:unit": "jest --watch",
     "style:check": "prettier --check src/**/*.ts test/**/*.ts",
     "style:fix": "prettier --write src/**/*.ts test/**/*.ts"
   },
