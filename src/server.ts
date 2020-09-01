@@ -1,9 +1,10 @@
-import './util/module-alias';
-import { Server } from '@overnightjs/core';
-import { Application } from 'express';
-import bodyParser from 'body-parser';
-import { ForecastController } from './controllers/forecast';
-import * as database from '@src/database';
+import { BeachesController } from './controllers/beaches'
+import './util/module-alias'
+import { Server } from '@overnightjs/core'
+import { Application } from 'express'
+import bodyParser from 'body-parser'
+import { ForecastController } from './controllers/forecast'
+import * as database from '@src/database'
 
 export class SetupServer extends Server {
   /*
@@ -11,7 +12,7 @@ export class SetupServer extends Server {
    * add the port variable to the SetupServer instance
    */
   constructor(private port = 3000) {
-    super();
+    super()
   }
 
   /*
@@ -19,30 +20,31 @@ export class SetupServer extends Server {
    * this way we allow the server to be used in tests and normal initialization
    */
   public async init(): Promise<void> {
-    this.setupExpress();
-    this.setupControllers();
-    await this.databaseSetup();
+    this.setupExpress()
+    this.setupControllers()
+    await this.databaseSetup()
   }
 
   private setupExpress(): void {
-    this.app.use(bodyParser.json());
-    this.setupControllers();
+    this.app.use(bodyParser.json())
+    this.setupControllers()
   }
 
   private setupControllers(): void {
-    const forecastController = new ForecastController();
-    this.addControllers([forecastController]);
+    const forecastController = new ForecastController()
+    const beachesController = new BeachesController()
+    this.addControllers([forecastController, beachesController])
   }
 
   public getApp(): Application {
-    return this.app;
+    return this.app
   }
 
   private async databaseSetup(): Promise<void> {
-    await database.connect();
+    await database.connect()
   }
 
   public async close(): Promise<void> {
-    await database.close();
+    await database.close()
   }
 }
