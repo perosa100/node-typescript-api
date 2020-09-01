@@ -1,24 +1,24 @@
-import { StormGlass } from '@src/clients/stormGlass'
-import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json'
-import { Forecast, ForecastProcessingInternalError } from '../forecast'
-import { Beach, BeachPosition } from '@src/models/beach'
+import { StormGlass } from '@src/clients/stormGlass';
+import stormGlassNormalizedResponseFixture from '@test/fixtures/stormglass_normalized_response_3_hours.json';
+import { Forecast, ForecastProcessingInternalError } from '../forecast';
+import { Beach, BeachPosition } from '@src/models/beach';
 
-jest.mock('@src/clients/stormGlass')
+jest.mock('@src/clients/stormGlass');
 
 describe('Forecast Service', () => {
-  const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>
+  const mockedStormGlassService = new StormGlass() as jest.Mocked<StormGlass>;
   it('should return the forecast for a list of beaches', async () => {
     mockedStormGlassService.fetchPoints.mockResolvedValue(
       stormGlassNormalizedResponseFixture
-    )
+    );
     const beaches: Beach[] = [
       {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: BeachPosition.E
-      }
-    ]
+        position: BeachPosition.E,
+      },
+    ];
     const expectedResponse = [
       {
         time: '2020-04-26T00:00:00+00:00',
@@ -36,9 +36,9 @@ describe('Forecast Service', () => {
             waveDirection: 231.38,
             waveHeight: 0.47,
             windDirection: 299.45,
-            windSpeed: 100
-          }
-        ]
+            windSpeed: 100,
+          },
+        ],
       },
       {
         time: '2020-04-26T01:00:00+00:00',
@@ -56,9 +56,9 @@ describe('Forecast Service', () => {
             waveDirection: 232.12,
             waveHeight: 0.46,
             windDirection: 310.48,
-            windSpeed: 100
-          }
-        ]
+            windSpeed: 100,
+          },
+        ],
       },
       {
         time: '2020-04-26T02:00:00+00:00',
@@ -76,21 +76,21 @@ describe('Forecast Service', () => {
             waveDirection: 232.86,
             waveHeight: 0.46,
             windDirection: 321.5,
-            windSpeed: 100
-          }
-        ]
-      }
-    ]
-    const forecast = new Forecast(mockedStormGlassService)
-    const beachesWithRating = await forecast.processForecastForBeaches(beaches)
-    expect(beachesWithRating).toEqual(expectedResponse)
-  })
+            windSpeed: 100,
+          },
+        ],
+      },
+    ];
+    const forecast = new Forecast(mockedStormGlassService);
+    const beachesWithRating = await forecast.processForecastForBeaches(beaches);
+    expect(beachesWithRating).toEqual(expectedResponse);
+  });
 
   it('should return an empty list when the beaches array is empty', async () => {
-    const forecast = new Forecast()
-    const response = await forecast.processForecastForBeaches([])
-    expect(response).toEqual([])
-  })
+    const forecast = new Forecast();
+    const response = await forecast.processForecastForBeaches([]);
+    expect(response).toEqual([]);
+  });
 
   it('should throw internal processing error when something goes wrong during the rating process', async () => {
     const beaches: Beach[] = [
@@ -98,13 +98,15 @@ describe('Forecast Service', () => {
         lat: -33.792726,
         lng: 151.289824,
         name: 'Manly',
-        position: BeachPosition.E
-      }
-    ]
-    mockedStormGlassService.fetchPoints.mockRejectedValue('Error fetching data')
-    const forecast = new Forecast(mockedStormGlassService)
+        position: BeachPosition.E,
+      },
+    ];
+    mockedStormGlassService.fetchPoints.mockRejectedValue(
+      'Error fetching data'
+    );
+    const forecast = new Forecast(mockedStormGlassService);
     await expect(
       forecast.processForecastForBeaches(beaches)
-    ).rejects.toThrowError(ForecastProcessingInternalError)
-  })
-})
+    ).rejects.toThrowError(ForecastProcessingInternalError);
+  });
+});
