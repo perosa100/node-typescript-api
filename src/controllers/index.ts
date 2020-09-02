@@ -1,4 +1,4 @@
-import { CUSTOM_VALIDATION } from './../models/User'
+import { CUSTOM_VALIDATION } from '../models/user'
 import { Response } from 'express'
 import mongoose from 'mongoose'
 

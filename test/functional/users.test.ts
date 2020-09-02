@@ -1,4 +1,4 @@
-import { User } from '@src/models/User'
+import { User } from '@src/models/user'
 import AuthService from '@src/services/auth'
 describe('Users functional tests', () => {
   beforeEach(async () => await User.deleteMany({}))
