@@ -5,9 +5,9 @@
       "mongoUrl": "MONGODB_URL"
     },
     "resources": {
-      "StormGlass": {
+      "stormGlass": {
         "apiUrl": "STORM_GLASS_API_URL",
-        "apiToken": "STORM_GLASS_API_KEY"
+        "apiToken": "STORM_GLASS_API_TOKEN"
       }
     },
     "auth": {
