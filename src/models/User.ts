@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/member-delimiter-style */
 import mongoose, { Document, Model } from 'mongoose'
-
+import AuthService from '@src/services/auth'
 export interface User {
   _id?: string
   name: string
@@ -42,5 +42,19 @@ schema.path('email').validate(
   'already exists in the database',
   CUSTOM_VALIDATION.DUPLICATED
 )
+
+
+schema.pre<UserModel>('save', async function (): Promise<void> {
+  if (!this.password || !this.isModified('password')) {
+    return
+  }
+
+  try {
+    const hashedPassword = await AuthService.hashPassword(this.password)
+    this.password = hashedPassword
+  } catch (error) {
+    console.log(error)
+  }
+})
 
 export const User: Model<UserModel> = mongoose.model('User', schema)
